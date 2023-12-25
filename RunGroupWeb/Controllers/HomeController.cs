@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using RunGroupWeb.Models;
+using RunGroupsWeb.Models;
 using System.Diagnostics;
 
-namespace RunGroupWeb.Controllers
+namespace Something.Controllers
 {
     public class HomeController : Controller
     {
