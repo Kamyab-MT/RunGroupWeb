@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RunGroupsWeb.Data;
 using RunGroupsWeb.Models;
 
@@ -18,6 +19,12 @@ namespace RunGroupsWeb.Controllers
         {
             List<Club> clubs = _context.Clubs.ToList();
             return View(clubs);
+        }
+
+        public IActionResult Details(int? id)
+        {
+            Club club = _context.Clubs.Include(b => b.Address).FirstOrDefault(t => t.Id == id);
+            return View(club);
         }
     }
 }

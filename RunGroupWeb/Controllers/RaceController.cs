@@ -20,5 +20,11 @@ namespace RunGroupsWeb.Controllers
             List<Race> races = _context.Races.ToList();
             return View(races);
         }
+
+        public IActionResult Details(int? id)
+        {
+            Race club = _context.Races.Include(b => b.Address).FirstOrDefault(t => t.Id == id);
+            return View(club);
+        }
     }
 }
