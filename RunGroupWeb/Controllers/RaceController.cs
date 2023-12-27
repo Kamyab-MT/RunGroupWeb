@@ -2,28 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using RunGroupsWeb.Data;
 using RunGroupsWeb.Models;
+using RunGroupWeb.Data.Interface;
 
 namespace RunGroupsWeb.Controllers
 {
     public class RaceController : Controller
     {
 
-        ApplicationDbContext _context;
+        IRaceRepository _race;
 
-        public RaceController(ApplicationDbContext context)
+        public RaceController(IRaceRepository race)
         {
-            _context = context;
+            _race = race;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Race> races = _context.Races.ToList();
+            IEnumerable<Race> races = await _race.GetAll();
             return View(races);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            Race club = _context.Races.Include(b => b.Address).FirstOrDefault(t => t.Id == id);
+            Race club = await _race.GetByIdAsync(id);
             return View(club);
         }
     }

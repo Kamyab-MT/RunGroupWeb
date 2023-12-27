@@ -2,28 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using RunGroupsWeb.Data;
 using RunGroupsWeb.Models;
+using RunGroupWeb.Data.Interface;
 
 namespace RunGroupsWeb.Controllers
 {
     public class ClubController : Controller
     {
 
-        ApplicationDbContext _context;
+        IClubRepository _club;
 
-        public ClubController(ApplicationDbContext context)
+        public ClubController(IClubRepository clubRepository)
         {
-            _context = context;
+            _club = clubRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Club> clubs = _context.Clubs.ToList();
+            IEnumerable<Club> clubs = await _club.GetAll();
             return View(clubs);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            Club club = _context.Clubs.Include(b => b.Address).FirstOrDefault(t => t.Id == id);
+            Club club = await _club.GetByIdAsync(id);
             return View(club);
         }
     }
