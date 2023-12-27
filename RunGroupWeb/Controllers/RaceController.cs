@@ -27,5 +27,23 @@ namespace RunGroupsWeb.Controllers
             Race club = await _race.GetByIdAsync(id);
             return View(club);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Race race)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(race);
+            }
+
+            _race.Add(race);
+            return RedirectToAction("Index");
+
+        }
     }
 }
