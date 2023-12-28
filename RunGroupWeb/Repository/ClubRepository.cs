@@ -8,7 +8,7 @@ namespace RunGroupWeb.Repository
     public class ClubRepository : IClubRepository
     {
 
-        ApplicationDbContext _context;
+        readonly ApplicationDbContext _context;
 
         public ClubRepository(ApplicationDbContext context) 
         {

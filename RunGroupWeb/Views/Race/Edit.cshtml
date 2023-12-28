@@ -1,0 +1,69 @@
+﻿@model Race
+@using RunGroupsWeb.Data.Enum
+
+<form method="post" asp-action="Edit">
+
+	<input asp-for="AddressId" class="form-control" type="hidden" value=@Model.AddressId>
+
+	<div class="form-group">
+
+		<label asp-for="Title">Title</label>
+		<input asp-for="Title" class="form-control" type="text" placeholder="Title" value=@Model.Title>
+		<span asp-validation-for="Title" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+
+		<label asp-for="Description">Description</label>
+		<input asp-for="Description" class="form-control" type="text" placeholder="Description" value=@Model.Description>
+		<span asp-validation-for="Description" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+
+		<label asp-for="Image">Image</label>
+		<input asp-for="Image" class="form-control" type="text" placeholder="Image">
+		<span asp-validation-for="Image" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+
+		<label asp-for="RaceCategory">Category</label>
+		<select asp-for="RaceCategory" class="form-control" asp-items="Html.GetEnumSelectList<ClubCategory>()" value=@Model.RaceCategory>
+			<option> --Select-- </option>
+		</select>
+		<span asp-validation-for="RaceCategory" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+
+		<label asp-for="Address.State">State</label>
+		<input asp-for="Address.State" class="form-control" type="text" placeholder="State" value=@Model.Address.State>
+		<span asp-validation-for="Address.State" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+
+		<label asp-for="Address.City">City</label>
+		<input asp-for="Address.City" class="form-control" type="text" placeholder="City" value=@Model.Address.City>
+		<span asp-validation-for="Address.City" class="text-danger"></span>
+	</div>
+
+	<div class="form-group">
+
+		<label asp-for="Address.Street">Street</label>
+		<input asp-for="Address.Street" class="form-control" type="text" placeholder="Street" value=@Model.Address.Street>
+		<span asp-validation-for="Address.Street" class="text-danger"></span>
+	</div>
+
+	<br>
+	<div class="row">
+		<div class="col-6">
+			<button class="form-control btn-primary">Submit</button>
+		</div>
+		<div class="col-6">
+			<a asp-controller="Race" asp-action="Index" class="btn btn-secondary form-control">Back to List</a>
+		</div>
+
+	</div>
+</form>

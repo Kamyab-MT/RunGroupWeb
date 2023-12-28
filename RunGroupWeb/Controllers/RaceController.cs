@@ -9,7 +9,7 @@ namespace RunGroupsWeb.Controllers
     public class RaceController : Controller
     {
 
-        IRaceRepository _race;
+        readonly IRaceRepository _race;
 
         public RaceController(IRaceRepository race)
         {
@@ -44,6 +44,48 @@ namespace RunGroupsWeb.Controllers
             _race.Add(race);
             return RedirectToAction("Index");
 
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Race club = await _race.GetByIdAsync(id);
+
+            if (club == null)
+                return View("Error");
+
+            return View(club);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Race race)
+        {
+
+            if (!ModelState.IsValid)
+                return View(race);
+
+            _race.Update(race);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            Race club = await _race.GetByIdAsync(id);
+
+            if (club == null)
+                return View("Error");
+
+            return View(club);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Race club)
+        {
+
+            if (!ModelState.IsValid)
+                return View(club);
+
+            _race.Delete(club);
+            return RedirectToAction("Index");
         }
     }
 }

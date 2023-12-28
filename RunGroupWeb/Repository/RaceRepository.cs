@@ -8,7 +8,7 @@ namespace RunGroupWeb.Repository
     public class RaceRepository : IRaceRepository
     {
 
-        ApplicationDbContext _context;
+        readonly ApplicationDbContext _context;
 
         public RaceRepository(ApplicationDbContext context)
         {
