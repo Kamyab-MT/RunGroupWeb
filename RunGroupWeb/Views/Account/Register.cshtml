@@ -1,12 +1,13 @@
 ﻿@using RunGroupWeb.ViewModels;
 
-@model LoginViewModel
+@model RegisterViewModel
 
 @{
-    ViewData["Title"] = "Login";
+	ViewData["Title"] = "Register";
 }
 
-<form asp-action="Login">
+
+<form asp-action="Register">
 
     <section class="vh-100">
         <div class="container py-5 h-100">
@@ -15,9 +16,9 @@
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
 
-                            <h3 class="mb-5">Sign in</h3>
+                            <h3 class="mb-5">Sign Up</h3>
 
-                            @if(TempData["Error"] != null)
+                            @if (TempData["Error"] != null)
                             {
                                 <span asp-validation-for="Email" class="text-danger">* @TempData["Error"]</span>
                             }
@@ -34,10 +35,16 @@
                                 <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
 
+                            <div class="form-outline mb-4">
+                                <label asp-for="ConfirmPassword" class="form-label" for="typePasswordX-2">Confirm Password</label>
+                                <input asp-for="ConfirmPassword" type="password" id="typePasswordX-2" class="form-control form-control-lg" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+
                             <div class="row">
 
                                 <div class="col-6">
-                                    <button class="btn btn-primary btn-lg btn-block form-control" type="submit">Login</button>
+                                    <button class="btn btn-primary btn-lg btn-block form-control" type="submit">Register</button>
                                 </div>
                                 <div class="col-6">
                                     <a class="btn btn-secondary btn-lg btn-block form-control" asp-controller="Home" asp-action="Index">Back to Home</a>

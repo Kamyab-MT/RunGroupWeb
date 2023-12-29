@@ -5,7 +5,7 @@ namespace RunGroupWeb.ViewModels
     public class LoginViewModel
     {
         [Display(Name = "Email Address")]
-        [Required(ErrorMessage = "Email Address is not valid")]
+        [Required(ErrorMessage = "Email Address is required")]
         [EmailAddress]
         public string Email { get; set; }
         [Required]

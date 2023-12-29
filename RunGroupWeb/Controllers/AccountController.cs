@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using RunGroupsWeb.Data;
 using RunGroupsWeb.Models;
+using RunGroupWeb.Data;
 using RunGroupWeb.ViewModels;
 
 namespace RunGroupWeb.Controllers
@@ -57,6 +59,45 @@ namespace RunGroupWeb.Controllers
 
             TempData["Error"] = "Wrong credintials, Please try again";
             return View(loginViewModel);
+        }
+
+        public IActionResult Register()
+        {
+            var registerViewModel = new RegisterViewModel();
+            return View(registerViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        {
+            if (!ModelState.IsValid) return View(registerViewModel);
+
+            var userCheck = await _userManager.FindByEmailAsync(registerViewModel.Email);
+
+            if (userCheck != null)
+            {
+                TempData["Error"] = "Email is already in use";
+                return View(registerViewModel);
+            }
+
+            AppUser user = new AppUser()
+            {
+                Email = registerViewModel.Email,
+                UserName = registerViewModel.Email
+            };
+
+            var response = await _userManager.CreateAsync(user);
+
+            if (response.Succeeded)
+                await _userManager.AddToRoleAsync(user, UserRole.User);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
     }
