@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RunGroupsWeb.Data;
+using RunGroupsWeb.Models;
+using RunGroupWeb.Data;
 using RunGroupWeb.Data.Interface;
 using RunGroupWeb.Repository;
 
@@ -11,7 +15,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer( builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IClubRepository, ClubRepository>();
 builder.Services.AddScoped<IRaceRepository, RaceRepository>();
+
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+
 var app = builder.Build();
+
+if(args.Length == 1 && args[0] == "seeddata")
+{
+    await Seed.SeedUsersAndRolesAsync(app);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -20,6 +36,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

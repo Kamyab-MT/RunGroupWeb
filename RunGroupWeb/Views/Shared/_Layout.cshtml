@@ -28,18 +28,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Race" asp-action="Index">Races</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            <partial name="_ValidationScriptsPartial" />
-            @RenderBody()
-        </main>
-    </div>
 
+    <main>
+        <partial name="_ValidationScriptsPartial" />
+        @RenderBody()
+    </main>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - RunGroupsWeb
