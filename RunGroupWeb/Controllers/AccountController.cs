@@ -41,6 +41,7 @@ namespace RunGroupWeb.Controllers
                 //User has been found
 
                 bool passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
+
                 if (passwordCheck)
                 {
                     //Password is correct
@@ -86,10 +87,12 @@ namespace RunGroupWeb.Controllers
                 UserName = registerViewModel.Email
             };
 
-            var response = await _userManager.CreateAsync(user);
+            var response = await _userManager.CreateAsync(user, registerViewModel.Password);
 
             if (response.Succeeded)
                 await _userManager.AddToRoleAsync(user, UserRole.User);
+            else
+                return View(registerViewModel);
 
             return RedirectToAction("Index", "Home");
         }
